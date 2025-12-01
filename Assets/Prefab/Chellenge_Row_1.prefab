@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 748546817561234513}
   - component: {fileID: 4449943010513530725}
   m_Layer: 0
-  m_Name: Chellenge_Row_1
+  m_Name: Challenge_Row_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
