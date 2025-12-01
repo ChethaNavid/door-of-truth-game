@@ -1,43 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 namespace DoorScript
 {
-	[RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(Collider))]
+    public class Door : MonoBehaviour
+    {
+        [Header("Quiz Settings")]
+        public bool isCorrectDoor = false; 
 
+        [Header("Animation")]
+        public float smooth = 1.0f;
+        private float openAngle = -90.0f;
+        private float closeAngle = 0.0f;
+		
+		[Header("Internal")]
+        public bool open = false;
+		private Collider myCollider;
 
-public class Door : MonoBehaviour {
-	public bool open;
-	public float smooth = 1.0f;
-	float DoorOpenAngle = -90.0f;
-    float DoorCloseAngle = 0.0f;
-	public AudioSource asource;
-	public AudioClip openDoor,closeDoor;
-	// Use this for initialization
-	void Start () {
-		asource = GetComponent<AudioSource> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (open)
-		{
-            var target = Quaternion.Euler (0, DoorOpenAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime * 5 * smooth);
-	
-		}
-		else
-		{
-            var target1= Quaternion.Euler (0, DoorCloseAngle, 0);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, target1, Time.deltaTime * 5 * smooth);
-	
-		}  
-	}
+        [Header("Audio")]
+        public AudioSource asource;
+        public AudioClip openClip, closeClip;
 
-	public void OpenDoor(){
-		open =!open;
-		asource.clip = open?openDoor:closeDoor;
-		asource.Play ();
-	}
-}
+        void Start()
+        {
+			myCollider = GetComponent<Collider>();
+            asource = GetComponent<AudioSource>();
+        }
+
+        void Update()
+        {
+            float targetAngle = open ? openAngle : closeAngle;
+            Quaternion targetRot = Quaternion.Euler(0, targetAngle, 0);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRot, Time.deltaTime * 5 * smooth);
+        }
+
+        public void TryOpenDoor()
+        {
+            if (open) return; 
+
+            if (isCorrectDoor)
+            {
+                // Just Open. Do NOT Stop.
+                open = true;
+				if(myCollider != null) myCollider.enabled = false;
+                PlaySound(openClip);
+            }
+            else
+            {
+                Debug.Log("Wrong Door!");
+                PlaySound(closeClip);
+            }
+        }
+
+        void PlaySound(AudioClip clip)
+        {
+            if (asource != null && clip != null) { asource.clip = clip; asource.Play(); }
+        }
+    }
 }

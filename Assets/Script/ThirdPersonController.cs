@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CharacterScript
@@ -7,90 +5,119 @@ namespace CharacterScript
     [RequireComponent(typeof(CharacterController))]
     public class ThirdPersonController : MonoBehaviour
     {
-        public float walkingSpeed = 7.5f;
-        public float runningSpeed = 11.5f;
-        public float jumpSpeed = 8.0f;
+        [Header("Movement Settings")]
+        public float walkingSpeed = 20f;
+        public float runningSpeed = 30f;
+        public float jumpSpeed = 10.0f;
         public float gravity = 20.0f;
 
-        public Transform cameraTransform;     // Third-person camera
-        public float cameraHeight = 2f;
-        public float cameraDistance = 7f;
-        public float cameraSmoothSpeed = 8f;
+        [Header("Camera Settings")]
+        public Transform cameraTransform;
+        public float cameraHeight = 5f;
+        public float cameraDistance = 10f;
+
+        // "SmoothDamp" uses time (0.1 is fast, 0.3 is slow/heavy)
+        // Set this to 0.1f for snappy, 0.2f for cinematic
+        public float cameraSmoothTime = 0.5f;
         public float lookSpeed = 2.0f;
 
+        // Internal Variables
         CharacterController characterController;
-        Vector3 moveDirection = Vector3.zero;
-        Vector3 cameraOffset;
+        Vector3 verticalVelocity = Vector3.zero;
+        Vector3 impactForce = Vector3.zero;
         float rotationY = 0f;
 
-        [HideInInspector]
+        // Helper for SmoothDamp
+        private Vector3 cameraVelocity = Vector3.zero;
+
         public bool canMove = true;
 
         void Start()
         {
             characterController = GetComponent<CharacterController>();
-
-            // Lock cursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
         void Update()
         {
-            // Player rotation with mouse X
+            // 1. Rotation (Mouse)
+            rotationY += Input.GetAxis("Mouse X") * lookSpeed;
+            transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+
+            // 2. Calculate Horizontal Movement (WASD)
+            Vector3 horizontalMove = Vector3.zero;
+
             if (canMove)
             {
-                rotationY += Input.GetAxis("Mouse X") * lookSpeed;
-                transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
+                Vector3 forward = transform.forward;
+                Vector3 right = transform.right;
+
+                bool isRunning = Input.GetKey(KeyCode.LeftShift);
+                float curSpeedX = (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical");
+                float curSpeedZ = (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal");
+
+                horizontalMove = (forward * curSpeedX) + (right * curSpeedZ);
             }
 
-            // Movement
-            Vector3 forward = transform.forward;
-            Vector3 right = transform.right;
-
-            bool isRunning = Input.GetKey(KeyCode.LeftShift);
-            float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
-            float curSpeedZ = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
-
-            float movementDirectionY = moveDirection.y;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedZ);
-
-            // Jumping
-            if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
+            // 3. Handle Gravity & Jumping
+            if (characterController.isGrounded)
             {
-                moveDirection.y = jumpSpeed;
+                verticalVelocity.y = -2f; // Stick to ground
+
+                if (Input.GetButton("Jump") && canMove)
+                {
+                    verticalVelocity.y = jumpSpeed;
+                }
             }
             else
             {
-                moveDirection.y = movementDirectionY;
+                verticalVelocity.y -= gravity * Time.deltaTime;
             }
 
-            // Gravity
-            if (!characterController.isGrounded)
+            // 4. Handle Wall Push (Impact) Decay
+            if (impactForce.magnitude > 0.2f)
             {
-                moveDirection.y -= gravity * Time.deltaTime;
+                // Fade out the push
+                impactForce = Vector3.Lerp(impactForce, Vector3.zero, 10 * Time.deltaTime);
             }
 
-            // Move the controller
-            characterController.Move(moveDirection * Time.deltaTime);
+            // 5. FINAL MOVE APPLICATION (Merge all forces into ONE call)
+            // Order: Input + Gravity + WallPush
+            Vector3 finalVelocity = horizontalMove + verticalVelocity + impactForce;
 
-            // Update third-person camera
-            UpdateCamera();
+            // Execute the single move
+            characterController.Move(finalVelocity * Time.deltaTime);
         }
 
-        void UpdateCamera()
+        // Camera must be in LateUpdate to stop jitter
+        void LateUpdate()
         {
             if (cameraTransform == null) return;
 
-            // Offset behind and above the player
-            cameraOffset = Quaternion.Euler(15f, 0f, 0f) * (-transform.forward * cameraDistance) + Vector3.up * cameraHeight;
-            Vector3 desiredPos = transform.position + cameraOffset;
+            // Calculate where the camera WANTS to be
+            Vector3 targetPosition = transform.position
+                                     - (transform.forward * cameraDistance)
+                                     + (Vector3.up * cameraHeight);
 
-            // Smooth camera movement
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, desiredPos, cameraSmoothSpeed * Time.deltaTime);
+            // USE SMOOTHDAMP INSTEAD OF LERP
+            // This eliminates the "Laggy/Shaky" feeling
+            cameraTransform.position = Vector3.SmoothDamp(
+                cameraTransform.position,
+                targetPosition,
+                ref cameraVelocity,
+                cameraSmoothTime
+            );
 
-            // Look at player
+            // Look at player's head height
             cameraTransform.LookAt(transform.position + Vector3.up * 1.5f);
+        }
+
+        public void AddImpact(Vector3 dir, float force)
+        {
+            dir.Normalize();
+            if (dir.y < 0) dir.y = -dir.y;
+            impactForce = dir.normalized * force / 3.0f;
         }
     }
 }
