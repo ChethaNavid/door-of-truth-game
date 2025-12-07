@@ -1,14 +1,14 @@
 using UnityEngine;
-using TMPro; // Needed for TextMeshPro
+using TMPro;
 
 public class DoorRow : MonoBehaviour
 {
     [Header("The Sign")]
-    public TextMeshPro questionText; // Drag the text on the black sign here
+    public TextMeshPro questionText;
 
     [Header("Door 1 (Left)")]
-    public DoorScript.Door door1;    // Drag Child Door 1 (Logic) here
-    public TextMeshPro text1;        // Drag Child Door 1 (Text) here
+    public DoorScript.Door door1;
+    public TextMeshPro text1;
 
     [Header("Door 2 (Middle)")]
     public DoorScript.Door door2;
@@ -21,26 +21,27 @@ public class DoorRow : MonoBehaviour
     // This is the function the GameManager calls
     public void SetupRow(QuizData data)
     {
-        // 1. Write the Question on the big sign
-        if(questionText != null) 
-            questionText.text = data.question;
+        if (questionText != null)
+            questionText.text = data.questionText;
 
-        // 2. Write the Answers on the doors
-        if(text1 != null) text1.text = data.answerA;
-        if(text2 != null) text2.text = data.answerB;
-        if(text3 != null) text3.text = data.answerC;
+        if (data.answers != null && data.answers.Length >= 3)
+        {
+            if (text1 != null) text1.text = data.answers[0];
+            if (text2 != null) text2.text = data.answers[1];
+            if (text3 != null) text3.text = data.answers[2];
+        }
 
-        // 3. Reset all doors to WRONG first
-        door1.isCorrectDoor = false;
-        door2.isCorrectDoor = false;
-        door3.isCorrectDoor = false;
+        // Reset all doors to WRONG first
+        if (door1 != null) door1.isCorrectDoor = false;
+        if (door2 != null) door2.isCorrectDoor = false;
+        if (door3 != null) door3.isCorrectDoor = false;
 
-        // 4. Set the CORRECT door based on the index (0, 1, or 2)
+        // Set the CORRECT door based on the index (0, 1, or 2)
         switch (data.correctIndex)
         {
-            case 0: door1.isCorrectDoor = true; break; // Left is correct
-            case 1: door2.isCorrectDoor = true; break; // Middle is correct
-            case 2: door3.isCorrectDoor = true; break; // Right is correct
+            case 0: if (door1 != null) door1.isCorrectDoor = true; break; // Left 
+            case 1: if (door2 != null) door2.isCorrectDoor = true; break; // Middle 
+            case 2: if (door3 != null) door3.isCorrectDoor = true; break; // Right 
         }
     }
 }

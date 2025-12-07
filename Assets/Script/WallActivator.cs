@@ -3,7 +3,6 @@ using UnityEngine;
 public class WallActivator : MonoBehaviour
 {
     [Header("Connections")]
-    // An Array [] lets you drag multiple objects here
     public DoorController[] allDoors; 
 
     private bool hasTriggered = false;

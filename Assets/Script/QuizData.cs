@@ -1,15 +1,17 @@
-using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class QuestionCollection
+{
+    public List<QuizData> easy;
+    public List<QuizData> medium;
+    public List<QuizData> hard;
+}
 
 [System.Serializable]
 public class QuizData
 {
-    [TextArea]
-    public string question;
-    public string answerA;
-    public string answerB;
-    public string answerC;
-    
-    [Tooltip("0 = Left, 1 = Middle, 2 = Right")]
-    [Range(0, 2)] 
-    public int correctIndex; 
+    public string questionText;
+    public string[] answers;
+    public int correctIndex;
 }

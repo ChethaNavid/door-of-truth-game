@@ -4,7 +4,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float moveSpeed = 10.0f;
+    public float moveSpeed = 50.0f;
     public Vector3 moveDirection = new Vector3(0, 0, -1);
     
     // Start as FALSE so they don't move immediately

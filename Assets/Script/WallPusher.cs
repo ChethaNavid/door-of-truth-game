@@ -37,16 +37,16 @@ public class WallPusher : MonoBehaviour
         // 2. CHECK TARGET: Is it the player?
         if (other.CompareTag("Player"))
         {
-            var playerScript = other.GetComponent<CharacterScript.ThirdPersonController>();
+            CharacterController controller = other.GetComponent<CharacterController>();
             
-            if (playerScript != null && parentDoor != null)
+            if (controller != null && parentDoor != null)
             {
                 // 3. CALCULATE DIRECTION
                 // We use the exact direction the parent wall is moving
                 Vector3 direction = parentDoor.moveDirection.normalized;
 
                 // 4. APPLY FORCE
-                playerScript.AddImpact(direction, pushForce);
+                controller.Move(pushForce * Time.deltaTime * direction);
             }
         }
     }
@@ -56,9 +56,7 @@ public class WallPusher : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
-        
-        // Green = Safe (Door Open)
-        // Red = Danger (Door Closed)
+
         if (connectedDoor != null && connectedDoor.open)
         {
             Gizmos.color = new Color(0, 1, 0, 0.3f); // Transparent Green

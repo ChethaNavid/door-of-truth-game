@@ -1,0 +1,308 @@
+{
+  "easy": [
+    {
+      "questionText": "What is 2 + 2?",
+      "answers": ["3", "4", "5"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What color is the sky?",
+      "answers": ["Blue", "Green", "Red"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Which animal says 'Moo'?",
+      "answers": ["Dog", "Cow", "Cat"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What is 5 + 5?",
+      "answers": ["10", "15", "20"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is the opposite of 'Hot'?",
+      "answers": ["Cold", "Warm", "Fire"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "How many fingers on one hand?",
+      "answers": ["4", "5", "6"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What color is a banana?",
+      "answers": ["Red", "Blue", "Yellow"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "What is 10 - 2?",
+      "answers": ["5", "8", "12"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which is a fruit?",
+      "answers": ["Carrot", "Apple", "Potato"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "How many legs does a dog have?",
+      "answers": ["2", "4", "6"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What is 1 + 0?",
+      "answers": ["1", "0", "10"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What do fish do?",
+      "answers": ["Fly", "Swim", "Run"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which shape is round?",
+      "answers": ["Square", "Circle", "Triangle"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What color is grass?",
+      "answers": ["Green", "Purple", "Pink"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 3 + 3?",
+      "answers": ["9", "6", "33"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which animal is big?",
+      "answers": ["Ant", "Mouse", "Elephant"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "What is 20 - 10?",
+      "answers": ["5", "10", "15"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What do you use to see?",
+      "answers": ["Ears", "Eyes", "Nose"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which is a liquid?",
+      "answers": ["Rock", "Water", "Wood"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "How many wheels on a bike?",
+      "answers": ["2", "4", "1"],
+      "correctIndex": 0
+    }
+  ],
+  "medium": [
+    {
+      "questionText": "What is 6 x 6?",
+      "answers": ["30", "36", "42"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Capital of France?",
+      "answers": ["London", "Paris", "Berlin"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which planet is the Red Planet?",
+      "answers": ["Venus", "Mars", "Jupiter"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What is 100 / 2?",
+      "answers": ["25", "50", "10"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "How many days in a year?",
+      "answers": ["365", "300", "400"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Which animal is fastest?",
+      "answers": ["Lion", "Cheetah", "Horse"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What is H2O?",
+      "answers": ["Air", "Water", "Fire"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What is 9 x 3?",
+      "answers": ["27", "18", "21"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Who painted the Mona Lisa?",
+      "answers": ["Picasso", "Da Vinci", "Van Gogh"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "How many continents are there?",
+      "answers": ["5", "6", "7"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "What is 50 - 25?",
+      "answers": ["20", "25", "30"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which is a reptile?",
+      "answers": ["Frog", "Snake", "Shark"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "What gas do we breathe?",
+      "answers": ["Oxygen", "Helium", "Carbon"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 12 x 2?",
+      "answers": ["22", "24", "26"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Largest ocean in the world?",
+      "answers": ["Atlantic", "Indian", "Pacific"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "How many sides has a hexagon?",
+      "answers": ["5", "6", "8"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Freezing point of water?",
+      "answers": ["0°C", "10°C", "100°C"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 8 x 4?",
+      "answers": ["30", "32", "36"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which is a mammal?",
+      "answers": ["Fish", "Whale", "Lizard"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Capital of Japan?",
+      "answers": ["Seoul", "Beijing", "Tokyo"],
+      "correctIndex": 2
+    }
+  ],
+  "hard": [
+    {
+      "questionText": "Square root of 144?",
+      "answers": ["10", "11", "12"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "What year did WWII end?",
+      "answers": ["1940", "1945", "1950"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Chemical symbol for Gold?",
+      "answers": ["Au", "Ag", "Fe"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 15 x 15?",
+      "answers": ["200", "225", "250"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Smallest bone in the body?",
+      "answers": ["Stapes", "Femur", "Tibia"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Who wrote 'Hamlet'?",
+      "answers": ["Dickens", "Shakespeare", "Twain"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Speed of sound is approx?",
+      "answers": ["343 m/s", "500 m/s", "1000 m/s"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 250 / 5?",
+      "answers": ["40", "50", "60"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which planet has rings?",
+      "answers": ["Mars", "Saturn", "Mercury"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Capital of Australia?",
+      "answers": ["Sydney", "Canberra", "Melbourne"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "How many bones in an adult?",
+      "answers": ["206", "250", "180"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 7 x 8?",
+      "answers": ["54", "56", "58"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Powerhouse of the cell?",
+      "answers": ["Nucleus", "Mitochondria", "Ribosome"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Height of Mount Everest?",
+      "answers": ["8,848m", "9,000m", "7,500m"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "What is 13 squared?",
+      "answers": ["169", "144", "196"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Who invented the telephone?",
+      "answers": ["Edison", "Bell", "Tesla"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Hardest natural substance?",
+      "answers": ["Gold", "Iron", "Diamond"],
+      "correctIndex": 2
+    },
+    {
+      "questionText": "What is 1000 - 450?",
+      "answers": ["500", "550", "600"],
+      "correctIndex": 1
+    },
+    {
+      "questionText": "Which element is 'Fe'?",
+      "answers": ["Iron", "Lead", "Zinc"],
+      "correctIndex": 0
+    },
+    {
+      "questionText": "Longest river in the world?",
+      "answers": ["Amazon", "Nile", "Yangtze"],
+      "correctIndex": 1
+    }
+  ]
+}
