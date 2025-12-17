@@ -42,6 +42,11 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
+        if (selectedDifficulty == Difficulty.Infinite)
+        {
+            isInfinite = true;
+        }
+
         LoadQuestions();
 
         // Safety Check
@@ -58,8 +63,7 @@ public class LevelGenerator : MonoBehaviour
         // Start Spawning
         currentSpawnZ = tileStartZ;
         while (currentSpawnZ < wallStartZ) SpawnFloorTile();
-        
-        currentSpawnZ = wallStartZ;
+
         SpawnWall();
         questionsSpawnedCount++; 
 
@@ -110,6 +114,7 @@ public class LevelGenerator : MonoBehaviour
         if (isInfinite)
         {
             SpawnSection();
+            questionsSpawnedCount++;
         }
         else
         {
