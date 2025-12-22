@@ -20,8 +20,8 @@ public class LevelGenerator : MonoBehaviour
     public Transform player;
 
     [Header("Start Positions (Z Axis)")]
-    public float tileStartZ = 10f; 
-    public float wallStartZ = 30f; 
+    public float tileStartZ = 0f; 
+    public float wallStartZ = 100f; 
 
     [Header("Position Offsets")]
     public float levelHeight = 15f; 
@@ -31,7 +31,7 @@ public class LevelGenerator : MonoBehaviour
     [Header("Spacing Settings")]
     public float distanceBetweenWalls = 50f; 
     public float tileSize = 5.0f;       
-    public float spawnDistance = 50f;   
+    public float spawnDistance = 75f;   
 
     // Internal State
     private List<QuizData> activeQuestionList = new List<QuizData>();
