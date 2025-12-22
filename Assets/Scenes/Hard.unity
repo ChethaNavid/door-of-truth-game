@@ -401,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 297958698}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17481948, y: 0, z: 0, w: 0.98460054}
-  m_LocalPosition: {x: 0, y: 24.9, z: -2}
+  m_LocalPosition: {x: 0, y: 24.9, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -616,13 +616,13 @@ MonoBehaviour:
   wallPrefab: {fileID: 1886514592039533561, guid: c81a51f0d37a84f42a9ec455210c90ff, type: 3}
   finishLinePrefab: {fileID: 5357845119527782859, guid: b2ab4206271bda546833eb713a451591, type: 3}
   player: {fileID: 32157642}
-  tileStartZ: 10
-  wallStartZ: 75
+  tileStartZ: 0
+  wallStartZ: 100
   levelHeight: 15
   wallYOffset: 11.5
   wallXOffset: -3.3
   distanceBetweenWalls: 50
-  tileSize: 3
+  tileSize: 5
   spawnDistance: 75
 --- !u!4 &842007173
 Transform:
@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 583091413269648081, guid: 76b9d8179905d454e9bf6dcc847231ce, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 583091413269648081, guid: 76b9d8179905d454e9bf6dcc847231ce, type: 3}
       propertyPath: m_LocalRotation.w
@@ -723,6 +723,14 @@ PrefabInstance:
     - target: {fileID: 5762160803773358998, guid: 76b9d8179905d454e9bf6dcc847231ce, type: 3}
       propertyPath: SprintSpeed
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589440287070451230, guid: 76b9d8179905d454e9bf6dcc847231ce, type: 3}
+      propertyPath: cursorLocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589440287070451230, guid: 76b9d8179905d454e9bf6dcc847231ce, type: 3}
+      propertyPath: cursorInputForLook
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -820,7 +828,7 @@ Transform:
   m_GameObject: {fileID: 1675387908}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17481948, y: 0, z: 0, w: 0.98460054}
-  m_LocalPosition: {x: 0, y: 24.9, z: -2}
+  m_LocalPosition: {x: 0, y: 24.9, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
