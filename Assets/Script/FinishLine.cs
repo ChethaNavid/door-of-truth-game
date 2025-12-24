@@ -15,12 +15,20 @@ public class FinishLine0 : MonoBehaviour
     [Header("UI")]
     public string winPanelName = "WinPanel";
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip finishSound;
+
     private float currentThreeStarTime;
     private float currentTwoStarTime;
 
     private void Start()
     {
-        // Set thresholds dynamically based on selected difficulty
+        // Allow sound to play even when game is paused
+        if (audioSource != null)
+            audioSource.ignoreListenerPause = true;
+
+        // Set thresholds based on difficulty
         if (GameSettings.selectedDifficulty == LevelGenerator.Difficulty.Infinite)
         {
             currentThreeStarTime = infiniteThreeStarTime;
@@ -37,8 +45,15 @@ public class FinishLine0 : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
+        // 🔊 Play finish sound
+        if (audioSource != null && finishSound != null)
+        {
+            audioSource.PlayOneShot(finishSound);
+        }
+
         GameTimer timer = FindObjectOfType<GameTimer>();
         if (timer != null) timer.PauseTimer();
+
         Time.timeScale = 0f;
 
         float rawSeconds = timer != null ? timer.GetCurrentTime() : 0f;
@@ -48,7 +63,6 @@ public class FinishLine0 : MonoBehaviour
 
         Debug.Log($"[FinishLine0] Time: {rawSeconds}s, Stars: {starsEarned}");
 
-        // Save dynamically per selected level
         HandleSaveData(formattedTime, starsEarned);
 
         // Show Win Panel
@@ -56,7 +70,8 @@ public class FinishLine0 : MonoBehaviour
         if (holder != null)
         {
             Transform panel = holder.transform.Find(winPanelName);
-            if (panel != null) panel.gameObject.SetActive(true);
+            if (panel != null)
+                panel.gameObject.SetActive(true);
         }
     }
 
@@ -73,14 +88,15 @@ public class FinishLine0 : MonoBehaviour
         if (File.Exists(path))
         {
             SaveData old = JsonUtility.FromJson<SaveData>(File.ReadAllText(path));
+
             bestT = old.bestTime;
             bestS = old.bestStars;
 
-            // Compare stars first, then numeric time
             float newTimeSec = FindObjectOfType<GameTimer>()?.GetCurrentTime() ?? 0f;
             float oldTimeSec = TimeStringToSeconds(old.bestTime);
 
-            if (newStars > old.bestStars || (newStars == old.bestStars && newTimeSec < oldTimeSec))
+            if (newStars > old.bestStars ||
+                (newStars == old.bestStars && newTimeSec < oldTimeSec))
             {
                 bestT = newTime;
                 bestS = newStars;
@@ -93,17 +109,18 @@ public class FinishLine0 : MonoBehaviour
 
     private int CalculateStars(float time)
     {
-        return time <= currentThreeStarTime ? 3 : time <= currentTwoStarTime ? 2 : 1;
+        return time <= currentThreeStarTime ? 3 :
+               time <= currentTwoStarTime ? 2 : 1;
     }
 
-    // Helper to convert "mm:ss" string to seconds
     private float TimeStringToSeconds(string time)
     {
         string[] split = time.Split(':');
         if (split.Length != 2) return 0f;
 
-        if (float.TryParse(split[0], out float minutes) && float.TryParse(split[1], out float seconds))
-            return minutes * 60f + seconds;
+        if (float.TryParse(split[0], out float m) &&
+            float.TryParse(split[1], out float s))
+            return m * 60f + s;
 
         return 0f;
     }

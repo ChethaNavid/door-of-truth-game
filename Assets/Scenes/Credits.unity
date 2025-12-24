@@ -661,10 +661,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Year 3 Software Engineering Project\n\nProject Manager:\n Chetha Navid\n\nGame
-    Idea: \nChetha Navid, Sea Huyty, Soy ChanRathana, \nThornpunleu Lorn, Pheng Lyming\n\nUI
-    Designer:\n Pheng Lyming\n\nUI Development: \nPheng Lyming\n\nGameplay Development:
-    \nChetha Navid, Sea Huyty, Soy ChanRathana,\n Thornpunleu Lorn\n"
+  m_text: "Year 3 Game Development Project\n\nLecturer:\nDr.Va Hongly\n\nProject
+    Manager:\nChetha Navid\n\nGame Idea: \nChetha Navid, Sea Huyty, Soy ChanRathana,
+    \nThornpunleu Lorn, Pheng Lyming\n\nUI Designer:\nPheng Lyming\n\nUI Development:
+    \nPheng Lyming, Sea Huyty, Thornpunleu Lorn\n\nGameplay Development: \nChetha
+    Navid, Soy ChanRathana\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da922681f6d7b3d418b597f542313123, type: 2}
   m_sharedMaterial: {fileID: 2826511848415942067, guid: da922681f6d7b3d418b597f542313123, type: 2}
