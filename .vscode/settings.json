@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "door-of-truth-game.sln"
+    "dotnet.defaultSolution": "DoorOfTruth.sln"
 }
