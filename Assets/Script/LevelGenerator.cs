@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum Difficulty { Easy, Medium, Hard, Infinite }
+
 public class LevelGenerator : MonoBehaviour
 {
-    public enum Difficulty { Easy, Medium, Hard, Infinite }
-
     [Header("Game Mode")]
     public Difficulty selectedDifficulty = Difficulty.Easy;
     public bool isInfinite = false;
@@ -171,3 +171,9 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 }
+public static class GameSettings
+{
+    public static Difficulty selectedDifficulty = Difficulty.Easy;
+    public static string selectedLevelName = "easy"; // default, overwritten by menu selection
+}
+
