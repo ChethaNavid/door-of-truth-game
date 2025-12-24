@@ -6528,7 +6528,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1677416985}
         m_TargetAssemblyTypeName: Fade, Assembly-CSharp
-        m_MethodName: PlayFadeInWaitFadeOut
+        m_MethodName: PlayFade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
