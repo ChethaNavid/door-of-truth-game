@@ -6,6 +6,7 @@ public class FallDeath : MonoBehaviour
     [Header("Settings")]
     [Tooltip("If player Y goes below this number, they die.")]
     public float deathHeight = -10.0f; 
+    public GameObject UI;
 
     void Update()
     {
@@ -18,6 +19,6 @@ public class FallDeath : MonoBehaviour
 
     void TriggerGameOver()
     {
-        Debug.Log("GAME OVER: You fell into the void!");
+        UI.SetActive(true);
     }
 }

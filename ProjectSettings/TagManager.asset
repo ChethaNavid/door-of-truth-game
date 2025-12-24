@@ -5,15 +5,16 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - WinPanel
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Interface
   - Water
   - UI
-  - 
-  - 
+  - player
+  - WinPanel
   - 
   - 
   - 
@@ -41,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 
+    uniqueID: 2997851789
     locked: 0

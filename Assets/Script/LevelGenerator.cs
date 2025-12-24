@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class LevelGenerator : MonoBehaviour
 {
     public enum Difficulty { Easy, Medium, Hard, Infinite }
+
     [Header("Game Mode")]
     public Difficulty selectedDifficulty = Difficulty.Easy;
     public bool isInfinite = false;
-    public int totalQuestions = 10;
+    public int totalQuestions = 10; // only used for non-infinite
 
     [Header("Data Source")]
-    [Tooltip("Drag your questions.json file here")]
     public TextAsset jsonFile;
 
     [Header("References")]
@@ -20,18 +20,18 @@ public class LevelGenerator : MonoBehaviour
     public Transform player;
 
     [Header("Start Positions (Z Axis)")]
-    public float tileStartZ = 0f; 
-    public float wallStartZ = 100f; 
+    public float tileStartZ = 0f;
+    public float wallStartZ = 100f;
 
     [Header("Position Offsets")]
-    public float levelHeight = 15f; 
-    public float wallYOffset = 11.5f; 
-    public float wallXOffset = -3.3f; 
-    
+    public float levelHeight = 15f;
+    public float wallYOffset = 11.5f;
+    public float wallXOffset = -3.3f;
+
     [Header("Spacing Settings")]
-    public float distanceBetweenWalls = 50f; 
-    public float tileSize = 5.0f;       
-    public float spawnDistance = 75f;   
+    public float distanceBetweenWalls = 50f;
+    public float tileSize = 5f;
+    public float spawnDistance = 75f;
 
     // Internal State
     private List<QuizData> activeQuestionList = new List<QuizData>();
@@ -42,33 +42,33 @@ public class LevelGenerator : MonoBehaviour
 
     void Start()
     {
-        if (selectedDifficulty == Difficulty.Infinite)
-        {
-            isInfinite = true;
-        }
+        // Get difficulty from menu
+        selectedDifficulty = GameSettings.selectedDifficulty;
+        isInfinite = selectedDifficulty == Difficulty.Infinite;
 
         LoadQuestions();
 
-        // Safety Check
         if (activeQuestionList == null || activeQuestionList.Count == 0)
         {
             Debug.LogError("No questions found for " + selectedDifficulty + " mode!");
             return;
         }
 
-        // Create Shuffle List
+        // Shuffle indices
         for (int i = 0; i < activeQuestionList.Count; i++) shuffledIndices.Add(i);
         ShuffleList(shuffledIndices);
 
-        // Start Spawning
+        // Spawn initial floor tiles
         currentSpawnZ = tileStartZ;
         while (currentSpawnZ < wallStartZ) SpawnFloorTile();
 
         SpawnWall();
-        questionsSpawnedCount++; 
+        questionsSpawnedCount++;
 
+        // Spawn a few sections ahead
         for (int i = 0; i < 2; i++) CheckAndSpawn();
     }
+
     void LoadQuestions()
     {
         if (jsonFile == null) return;
@@ -76,26 +76,24 @@ public class LevelGenerator : MonoBehaviour
         QuestionCollection loadedData = JsonUtility.FromJson<QuestionCollection>(jsonFile.text);
         activeQuestionList = new List<QuizData>();
 
-        // 2. NEW: Pick the list based on Difficulty Dropdown
         switch (selectedDifficulty)
         {
             case Difficulty.Easy:
-                activeQuestionList = loadedData.easy;
+                if (loadedData.easy != null) activeQuestionList.AddRange(loadedData.easy);
                 break;
             case Difficulty.Medium:
-                activeQuestionList = loadedData.medium;
+                if (loadedData.medium != null) activeQuestionList.AddRange(loadedData.medium);
                 break;
             case Difficulty.Hard:
-                activeQuestionList = loadedData.hard;
+                if (loadedData.hard != null) activeQuestionList.AddRange(loadedData.hard);
                 break;
             case Difficulty.Infinite:
-                // Combine ALL lists for Infinite mode
-                if(loadedData.easy != null) activeQuestionList.AddRange(loadedData.easy);
-                if(loadedData.medium != null) activeQuestionList.AddRange(loadedData.medium);
-                if(loadedData.hard != null) activeQuestionList.AddRange(loadedData.hard);
+                if (loadedData.easy != null) activeQuestionList.AddRange(loadedData.easy);
+                if (loadedData.medium != null) activeQuestionList.AddRange(loadedData.medium);
+                if (loadedData.hard != null) activeQuestionList.AddRange(loadedData.hard);
                 break;
         }
-        
+
         Debug.Log("Loaded " + activeQuestionList.Count + " questions for " + selectedDifficulty + " mode.");
     }
 
@@ -111,23 +109,17 @@ public class LevelGenerator : MonoBehaviour
 
     void CheckAndSpawn()
     {
-        if (isInfinite)
+        int maxQuestions = isInfinite ? activeQuestionList.Count : totalQuestions;
+
+        if (questionsSpawnedCount < maxQuestions)
         {
             SpawnSection();
             questionsSpawnedCount++;
         }
-        else
+        else if (!levelComplete)
         {
-            if (questionsSpawnedCount < totalQuestions)
-            {
-                SpawnSection();
-                questionsSpawnedCount++;
-            }
-            else if (!levelComplete)
-            {
-                SpawnFinishLine();
-                levelComplete = true;
-            }
+            SpawnFinishLine();
+            levelComplete = true;
         }
     }
 
@@ -148,17 +140,17 @@ public class LevelGenerator : MonoBehaviour
     void SpawnWall()
     {
         Instantiate(tilePrefab, new Vector3(0, levelHeight, currentSpawnZ), Quaternion.identity);
-        
+
         GameObject newWall = Instantiate(wallPrefab, new Vector3(wallXOffset, levelHeight + wallYOffset, currentSpawnZ), Quaternion.identity);
         DoorRow rowScript = newWall.GetComponent<DoorRow>();
-        
+
         if (rowScript != null && activeQuestionList.Count > 0)
         {
-            // Use Modulo (%) so we never crash even if we run out of unique questions
             int uniqueIndex = shuffledIndices[questionsSpawnedCount % shuffledIndices.Count];
             rowScript.SetupRow(activeQuestionList[uniqueIndex]);
         }
-        currentSpawnZ += tileSize; 
+
+        currentSpawnZ += tileSize;
     }
 
     void SpawnFinishLine()
