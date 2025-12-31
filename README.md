@@ -83,6 +83,10 @@ This project demonstrates the practical application of theoretical game design a
 3. Run DoorOfTruth.exe.
 
 ---
+## Download Build
+The playable build is available here:
+https://drive.google.com/drive/folders/1ewYn75v6cyBxteIv2vprTMvIGl_nq0uQ?usp=sharing
+---
 
 ## Author
 Navid Chetha
